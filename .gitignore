@@ -4,3 +4,6 @@
 # Executables
 out/
 bin/
+
+cmake-build-debug/
+.idea/
