@@ -29,8 +29,8 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_configure(REQUIRES	catch2/2.13.8
 								nlohmann_json/3.10.5
 								json-schema-validator/2.1.0
-								capnproto/0.9.1
-                      GENERATORS cmake_find_package)
+								toml11/3.7.0
+					  GENERATORS cmake_find_package)
 
 conan_cmake_autodetect(settings)
 
@@ -43,16 +43,16 @@ conan_cmake_install(PATH_OR_REFERENCE .
 find_package(Catch2)
 find_package(nlohmann_json)
 find_package(nlohmann_json_schema_validator)
-find_package(CapnProto)
+find_package(toml11)
 
 add_executable ("LWWordCounter"
 	"src/main.cpp")
 
 target_link_libraries(
-	"LWWordCounter"
-	PRIVATE
-		 Catch2::Catch2
-		 nlohmann_json::nlohmann_json
-		 CapnProto::capnp
-		 nlohmann_json_schema_validator::nlohmann_json_schema_validator
+					"LWWordCounter"
+					PRIVATE
+					Catch2::Catch2
+					nlohmann_json::nlohmann_json
+					nlohmann_json_schema_validator::nlohmann_json_schema_validator
+					toml11::toml11
 )
