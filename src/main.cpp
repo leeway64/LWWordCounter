@@ -4,7 +4,6 @@
 
 #include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
-#include <toml.hpp>
 
 using nlohmann::json_schema::json_validator;
 
@@ -47,9 +46,39 @@ int main()
         catch (const std::exception& e) {
             std::cerr << "Validation failed, here is why: " << e.what() << std::endl;
         }
-    }
 
-    const toml::value summary_data;
+        std::unordered_map<std::string, int> wordCounts;
+        std::string next;
+        std::string name = input_file_json["input_file_name"];
+        std::ifstream input3(name);
+        while(input3 >> next)
+        {
+//            std::cout << next << std::endl;
+            if(!wordCounts.contains(next))
+            {
+                wordCounts[next] = 1;
+            }
+            else
+            {
+                wordCounts[next]++;
+            }
+        }
+        input3.close();
+        for(auto keyValue : wordCounts) {
+            std::cout << keyValue.second << "\t" << keyValue.first << std::endl;
+        }
+
+        std::unordered_map<std::string, int> fileSummary;
+        fileSummary["number_of_unique_words"] = wordCounts.size();
+
+        int total_words = 0;
+
+
+        fileSummary
+
+        std::vector<std::uint8_t> v_ubjson = nlohmann::json ::to_ubjson(input_file_json);
+
+    }
 
 	return 0;
 }

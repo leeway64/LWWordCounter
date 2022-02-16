@@ -1,6 +1,6 @@
 # LWWordCounter
 
-LWWordCounter is an application that visualizes the frequency of words from a text file.
+LWWordCounter is an application that displays the frequency of words from a text file.
 
 ## Installation
 
