@@ -16,6 +16,8 @@ process, wait...`, then run `conan remove -f <package_name>/<package_version>` i
 
 ## Third-Party Tools
 
+- CMake: Build system generator.
+- Conan: Package manager for C/C++.
 - Catch2: 
 - nlohmann_json: 
 - 

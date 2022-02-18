@@ -16,6 +16,7 @@ namespace CounterHelpers
 
     int getTotalWords(std::unordered_map<std::string, int> wordCounts);
 
+    std::pair<std::string, int> getMostPopularStats(std::unordered_map<std::string, int> wordCounts);
 }
 
 #endif //LWWORDCOUNTER_WORDCOUNTER_HELPER_H

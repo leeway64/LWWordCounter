@@ -13,7 +13,11 @@
       "description": "The minimum occurrences to display",
       "type": "integer",
       "minimum":  1
+    },
+    "serialization_format": {
+      "Description":"The format to serialize the file summary into",
+      "type": "string"
     }
   },
-  "required": ["input_file_name", "minimum_occurrences"]
+  "required": ["input_file_name", "minimum_occurrences", "serialization_format"]
 }

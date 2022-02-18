@@ -41,22 +41,47 @@ int main()
             std::cerr << "Validation failed, here is why: " << e.what() << std::endl;
         }
         std::string name = input_file_json["input_file_name"];
+        int minOccurs = input_file_json["minimum_occurrences"];
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(name);
 
+
+        std::unordered_map<std::string, int> fileSummary;
+        fileSummary["unique_words"] = wordCounts.size();
+        fileSummary["total_words"] = CounterHelpers::getTotalWords(wordCounts);
+
+        std::pair<std::string, int> mostPopularStats = CounterHelpers::getMostPopularStats(wordCounts);
+
+        fileSummary["highest_frequency"] = mostPopularStats.second;
+
+        std::cout << "Text file selected: " << name << std::endl;
+        std::cout << "Minimum number of occurrences for printing: " << minOccurs << std::endl;
+        std::cout << std::endl;
+
+        std::cout << "Most popular word: " << mostPopularStats.first << std::endl;
+
         for(auto keyValue : wordCounts) {
+            if(keyValue.second >= minOccurs)
+            {
+                std::cout << keyValue.second << "\t" << keyValue.first << std::endl;
+            }
+        }
+        std::cout << std::endl;
+
+        for(auto keyValue : fileSummary) {
             std::cout << keyValue.second << "\t" << keyValue.first << std::endl;
         }
 
-        std::unordered_map<std::string, int> fileSummary;
-        fileSummary["unique_words_number"] = wordCounts.size();
-        fileSummary["total_words_number"] = CounterHelpers::getTotalWords(wordCounts);
+        nlohmann::json fileSummaryJSON(fileSummary);
 
-        int total_words = 0;
+        std::string serialization_format = input_file_json["serialization_format"];
 
-
-//        fileSummary
-
-        std::vector<std::uint8_t> v_ubjson = nlohmann::json ::to_ubjson(input_file_json);
+        if (serialization_format == "BSON")
+        {
+            std::vector<std::uint8_t> bson = nlohmann::json::to_bson(fileSummaryJSON);
+        } else if (serialization_format == "UBJSON")
+        {
+            std::vector<std::uint8_t> ubjson = nlohmann::json::to_ubjson(fileSummaryJSON);
+        }
 
     }
 

@@ -41,9 +41,26 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(std::string i
 int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCounts)
 {
     int wordsSum = 0;
-//    for (auto keyValue : wordCounts)
-//    {
-//        wordsSum += keyValue.second
-//    }
+    for (auto keyValue : wordCounts)
+    {
+        wordsSum += keyValue.second;
+    }
     return wordsSum;
+}
+
+std::pair<std::string, int> CounterHelpers::getMostPopularStats(std::unordered_map<std::string, int> wordCounts)
+{
+    std::pair<std::string, int> popularStats;
+    std::string mostPopularWord;
+    int highestFrequency = 0;
+    for(auto keyValue : wordCounts) {
+        if (keyValue.second >= highestFrequency)
+        {
+            highestFrequency = keyValue.second;
+            mostPopularWord = keyValue.first;
+        }
+    }
+    popularStats.first = mostPopularWord;
+    popularStats.second = highestFrequency;
+    return popularStats;
 }
