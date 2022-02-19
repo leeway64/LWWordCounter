@@ -38,7 +38,8 @@ int main()
             //std::cout << "Validation succeeded\n";
         }
         catch (const std::exception& e) {
-            std::cerr << "Validation failed, here is why: " << e.what() << std::endl;
+            std::cerr << "Validation failed: " << e.what() << std::endl;
+            return 1;
         }
         std::string name = input_file_json["input_file_name"];
         int minOccurs = input_file_json["minimum_occurrences"];
@@ -75,13 +76,28 @@ int main()
 
         std::string serialization_format = input_file_json["serialization_format"];
 
+        std::vector<std::uint8_t> serializedData;
+        std::ofstream output;
         if (serialization_format == "BSON")
         {
-            std::vector<std::uint8_t> bson = nlohmann::json::to_bson(fileSummaryJSON);
+            serializedData = nlohmann::json::to_bson(fileSummaryJSON);
+            output.open("serialized_file_summary.bson");
         } else if (serialization_format == "UBJSON")
         {
-            std::vector<std::uint8_t> ubjson = nlohmann::json::to_ubjson(fileSummaryJSON);
+            serializedData = nlohmann::json::to_ubjson(fileSummaryJSON);
+            output.open("serialized_file_summary.ubj");
         }
+        else
+        {
+            return 1;
+        }
+
+        for (const auto& element : serializedData)
+        {
+            output << element;
+        }
+
+        output.close();
 
     }
 

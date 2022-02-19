@@ -5,5 +5,8 @@
 out/
 bin/
 
+# Python virtual environment
+.venv/
+
 cmake-build-debug/
 .idea/
