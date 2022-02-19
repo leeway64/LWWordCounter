@@ -3,9 +3,19 @@
 import ubjson
 import bson
 
-z = []
-with open(r"../bin/serialized_file_summary.ubj", "rb") as file:
-    z = file.read()
+file_name = input("Enter file name: ")
+serial_format = input("Enter serialization format: ")
 
-decoded = ubjson.loadb(z)
-print(decoded["highest_frequency"])
+if serial_format == "UBJSON":
+    with open(r"../bin/serialized_file_summary.ubj", "rb") as file:
+        encoded = file.read()
+
+    decoded = ubjson.loadb(encoded)
+elif serial_format == "BSON":
+    with open(r"../bin/serialized_file_summary.bson", "rb") as file:
+        encoded = file.read()
+
+    decoded = bson.loads(encoded)
+    print(decoded)
+else:
+    print("Unknown serialization format. Enter either \"UBJSON\" or \"BSON\"")
