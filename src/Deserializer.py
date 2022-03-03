@@ -6,8 +6,8 @@ import bson
 class Deserializer:
     def __init__(self, serialized_file_name, serialization_format):
         self._serialized_file_name = serialized_file_name
-        self._deserialized_data = None
         self._serialization_format = serialization_format
+        self._deserialized_data = None
 
     @property
     def serialized_file_name(self):

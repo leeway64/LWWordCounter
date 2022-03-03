@@ -48,8 +48,8 @@ find_package(fmt)
 
 add_executable ("LWWordCounter"
 				"src/main.cpp"
-				src/WordCounter-helper.hpp
-				src/WordCounter-helper.cpp)
+                "src/WordCounter-helpers.hpp"
+                "src/WordCounter-helpers.cpp")
 
 target_link_libraries(
 					"LWWordCounter"

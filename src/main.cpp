@@ -1,12 +1,13 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-#include <fmt/core.h>
+#include <filesystem>
 
+#include <fmt/core.h>
 #include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
 
-#include "WordCounter-helper.hpp"
+#include "WordCounter-helpers.hpp"
 
 
 using nlohmann::json_schema::json_validator;
@@ -46,13 +47,13 @@ int main()
         }
 
 
-        std::string input_name = input_file_json["input_file_name"];
-        int minOccurs = input_file_json["minimum_occurrences"];
+        const std::string input_text_file = input_file_json["input_file_name"];
+        const int minOccurs = input_file_json["minimum_occurrences"];
 
 
         // Get the frequency of each word in the text file. i.e., word x appears y times in the
         // file.
-        std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(input_name);
+        std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(input_text_file);
 
 
         std::unordered_map<std::string, int> fileSummary;
@@ -60,11 +61,11 @@ int main()
         fileSummary["total_words"] = CounterHelpers::getTotalWords(wordCounts);
 
 
-        std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
+        const std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
         fileSummary["highest_frequency"] = mostPopularWord.second;
 
 
-        std::cout << "Text file selected: " << input_name << std::endl;
+        std::cout << "Text file selected: " << input_text_file << std::endl;
         std::cout << "Minimum number of occurrences for printing: " << minOccurs << std::endl;
         std::cout << std::endl;
 
@@ -91,16 +92,19 @@ int main()
         std::string serialization_format = input_file_json["serialization_format"];
         std::vector<std::uint8_t> serializedData;
 
+        // Get the name (without the extension) of the input text file.
+        std::string output_file_name{std::filesystem::path(input_text_file).stem().string()};
+        output_file_name += "_serialized_summary";
         std::ofstream output;
         // Serialize the file summary into either BSON or UBJSON.
         if (serialization_format == "BSON")
         {
             serializedData = nlohmann::json::to_bson(fileSummaryJSON);
-            output.open("serialized_file_summary.bson");
+            output.open(output_file_name + ".bson");
         } else if (serialization_format == "UBJSON")
         {
             serializedData = nlohmann::json::to_ubjson(fileSummaryJSON);
-            output.open("serialized_file_summary.ubj");
+            output.open(output_file_name + ".ubj");
         }
         else
         {

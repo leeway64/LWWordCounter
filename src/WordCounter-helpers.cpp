@@ -1,15 +1,17 @@
 #include <string>
 #include <fstream>
 
-#include "WordCounter-helper.hpp"
+#include "WordCounter-helpers.hpp"
 
-void CounterHelpers::createInputJSON(std::string input_file_name)
+
+void CounterHelpers::createInputJSON(const std::string& input_file_name)
 {
     std::ofstream output(input_file_name);
     // Write brackets so that the file can be correctly read as a JSON file
     output << "{\n}\n";
     output.close();
 }
+
 
 void CounterHelpers::getJSON(const std::string& file_name, nlohmann::json& JSONVariable)
 {
@@ -18,7 +20,8 @@ void CounterHelpers::getJSON(const std::string& file_name, nlohmann::json& JSONV
     input.close();
 }
 
-std::unordered_map<std::string, int> CounterHelpers::getWordCounts(std::string input_file_name)
+
+std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::string& input_file_name)
 {
     std::unordered_map<std::string, int> wordCounts;
     std::string next;
@@ -38,6 +41,7 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(std::string i
     return wordCounts;
 }
 
+
 int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCounts)
 {
     int wordsSum = 0;
@@ -48,7 +52,8 @@ int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCount
     return wordsSum;
 }
 
-std::pair<std::string, int> CounterHelpers::getMostPopularWord(std::unordered_map<std::string, int> wordCounts)
+
+std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unordered_map<std::string, int>& wordCounts)
 {
     std::pair<std::string, int> popularStats;
     std::string mostPopularWord;
