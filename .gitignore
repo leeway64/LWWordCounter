@@ -5,8 +5,9 @@
 out/
 bin/
 
-# Python virtual environment
+# Python files
 .venv/
+__pycache__/
 
-cmake-build-debug/
+cmake-build-*/
 .idea/

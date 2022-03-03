@@ -48,7 +48,7 @@ int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCount
     return wordsSum;
 }
 
-std::pair<std::string, int> CounterHelpers::getMostPopularStats(std::unordered_map<std::string, int> wordCounts)
+std::pair<std::string, int> CounterHelpers::getMostPopularWord(std::unordered_map<std::string, int> wordCounts)
 {
     std::pair<std::string, int> popularStats;
     std::string mostPopularWord;

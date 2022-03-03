@@ -1,13 +1,16 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <fmt/core.h>
 
 #include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
 
 #include "WordCounter-helper.hpp"
 
+
 using nlohmann::json_schema::json_validator;
+
 
 int main()
 {
@@ -31,53 +34,65 @@ int main()
         nlohmann::json input_schema_json;
         CounterHelpers::getJSON(input_schema_name, input_schema_json);
 
+
         json_validator validator;
         validator.set_root_schema(input_schema_json);
         try {
             validator.validate(input_file_json);
-            //std::cout << "Validation succeeded\n";
         }
         catch (const std::exception& e) {
             std::cerr << "Validation failed: " << e.what() << std::endl;
             return 1;
         }
-        std::string name = input_file_json["input_file_name"];
+
+
+        std::string input_name = input_file_json["input_file_name"];
         int minOccurs = input_file_json["minimum_occurrences"];
-        std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(name);
+
+
+        // Get the frequency of each word in the text file. i.e., word x appears y times in the
+        // file.
+        std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(input_name);
 
 
         std::unordered_map<std::string, int> fileSummary;
         fileSummary["unique_words"] = wordCounts.size();
         fileSummary["total_words"] = CounterHelpers::getTotalWords(wordCounts);
 
-        std::pair<std::string, int> mostPopularStats = CounterHelpers::getMostPopularStats(wordCounts);
 
-        fileSummary["highest_frequency"] = mostPopularStats.second;
+        std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
+        fileSummary["highest_frequency"] = mostPopularWord.second;
 
-        std::cout << "Text file selected: " << name << std::endl;
+
+        std::cout << "Text file selected: " << input_name << std::endl;
         std::cout << "Minimum number of occurrences for printing: " << minOccurs << std::endl;
         std::cout << std::endl;
 
-        std::cout << "Most popular word: " << mostPopularStats.first << std::endl;
+        std::cout << "File summary:" << std::endl;
+        std::cout << "    Most popular word: " << mostPopularWord.first << std::endl;
+        for(auto keyValue : fileSummary) {
+            std::cout << fmt::format("    {}\t{}", keyValue.second, keyValue.first) << std::endl;
 
-        for(auto keyValue : wordCounts) {
-            if(keyValue.second >= minOccurs)
-            {
-                std::cout << keyValue.second << "\t" << keyValue.first << std::endl;
-            }
         }
         std::cout << std::endl;
 
-        for(auto keyValue : fileSummary) {
-            std::cout << keyValue.second << "\t" << keyValue.first << std::endl;
+        std::cout << "Word frequencies:" << std::endl;
+        // Print out the word and the corresponding frequency, assuming the frequency is above the
+        // minOccurs threshold.
+        for(auto keyValue : wordCounts) {
+            if(keyValue.second >= minOccurs)
+            {
+                std::cout << fmt::format("    {}\t{}", keyValue.second, keyValue.first) << std::endl;
+            }
         }
 
+
         nlohmann::json fileSummaryJSON(fileSummary);
-
         std::string serialization_format = input_file_json["serialization_format"];
-
         std::vector<std::uint8_t> serializedData;
+
         std::ofstream output;
+        // Serialize the file summary into either BSON or UBJSON.
         if (serialization_format == "BSON")
         {
             serializedData = nlohmann::json::to_bson(fileSummaryJSON);
@@ -92,6 +107,7 @@ int main()
             return 1;
         }
 
+        // Send the binary data into the .bson or .ubj file.
         for (const auto& element : serializedData)
         {
             output << element;
