@@ -27,10 +27,7 @@ class Deserializer:
 
     @property
     def deserialized_data(self):
-        # Lazily load the deserialized data
-        if not self._deserialized_data:
-            self._deserialized_data = self.__deserialize()
-
+        self._deserialized_data = self.__deserialize()
         return self._deserialized_data
 
     def __deserialize(self):
