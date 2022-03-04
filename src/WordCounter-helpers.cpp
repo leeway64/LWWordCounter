@@ -1,5 +1,6 @@
 #include <string>
 #include <fstream>
+#include <algorithm>
 
 #include "WordCounter-helpers.hpp"
 
@@ -25,9 +26,10 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
 {
     std::unordered_map<std::string, int> wordCounts;
     std::string next;
-    std::ifstream input3(input_file_name);
-    while(input3 >> next)
+    std::ifstream input(input_file_name);
+    while(input >> next)
     {
+        std::transform(next.begin(), next.end(), next.begin(), tolower);
         if(!wordCounts.contains(next))
         {
             wordCounts[next] = 1;
@@ -37,7 +39,7 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
             wordCounts[next]++;
         }
     }
-    input3.close();
+    input.close();
     return wordCounts;
 }
 

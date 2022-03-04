@@ -35,7 +35,7 @@ class TestSuite:
         d2.serialized_file_name = "test4_serialized_summary.ubj"
         data = d2.deserialized_data
         assert data["total_words"] == 106
-        assert data["highest_frequency"] == 2
+        assert data["highest_frequency"] == 16
         assert data["unique_words"] == 16
 
     def test_BSON_deserialization(self):
@@ -60,5 +60,5 @@ class TestSuite:
         d2.serialized_file_name = "test4_serialized_summary.bson"
         data = d2.deserialized_data
         assert data["total_words"] == 106
-        assert data["highest_frequency"] == 2
+        assert data["highest_frequency"] == 16
         assert data["unique_words"] == 16
