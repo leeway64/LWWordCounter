@@ -52,10 +52,25 @@ add_executable ("LWWordCounter"
                 "src/WordCounter-helpers.cpp")
 
 target_link_libraries(
-					"LWWordCounter"
-					PRIVATE
-					Catch2::Catch2
-					nlohmann_json::nlohmann_json
-					nlohmann_json_schema_validator::nlohmann_json_schema_validator
-                    fmt::fmt
+        "LWWordCounter"
+        PRIVATE
+        Catch2::Catch2
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::nlohmann_json_schema_validator
+        fmt::fmt
+)
+
+add_executable("WordCounter_Tests"
+               "src/WordCounter-helpers.hpp"
+               "src/WordCounter-helpers.cpp"
+               "src/tests/catch2_main.cpp"
+               "src/tests/test_suite.cpp")
+
+target_link_libraries(
+        "WordCounter_Tests"
+        PRIVATE
+        Catch2::Catch2
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::nlohmann_json_schema_validator
+        fmt::fmt
 )
