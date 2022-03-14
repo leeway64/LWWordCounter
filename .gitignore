@@ -1,13 +1,16 @@
-# Visual Studio files
-.vs/
-
 # Executables
-out/
-bin/
+*.exe
 
 # Python files
 .venv/
 __pycache__/
 
+# CLion default CMake build folders
 cmake-build-*/
+
+# CLion project-specific settings
 .idea/
+
+# Serialization formats
+*.ubj
+*.bson

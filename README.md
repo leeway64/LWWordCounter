@@ -25,9 +25,11 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 {
   "input_file_name": "..\\src\\tests\\test_text_files\\moby_dick.txt",
   "minimum_occurrences": 800,
-  "serialization_format": "BSON"
+  "serialization_format": "UBJSON"
 }
 ```
+
+This JSON file is provided as an example in the `bin` folder.
 
 Then after running the program, the console output will be:
 

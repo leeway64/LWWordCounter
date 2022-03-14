@@ -1,0 +1,5 @@
+{
+  "input_file_name": "..\\src\\tests\\test_files\\moby_dick.txt",
+  "minimum_occurrences": 800,
+  "serialization_format": "UBJSON"
+}
