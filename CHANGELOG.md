@@ -9,6 +9,13 @@ this project follows [semantic versioning](https://semver.org/).
 
 - None
 
+## [1.0.1] - 2022-3-14
+
+### Added
+
+- Unit tests for C++ functions
+- MIT License
+
 ## [1.0.0] - 2022-3-3
 
 - First release
