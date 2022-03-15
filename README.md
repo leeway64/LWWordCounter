@@ -1,7 +1,11 @@
 # LWWordCounter
 
-LWWordCounter is an application that displays the frequency of words from a text file.
+LWWordCounter is an application that displays the frequency of words from a text file. It also
+summarizes several statistics for that file, such as the most popular word and the total number of
+words. Finally, LWWordCounter serializes this summary into either [UBJSON](https://ubjson.org/) or
+[BSON](https://bsonspec.org/).
 
+The `Deserializer` Python class is provided to deserialize this summary data.
 
 ## Installation
 
@@ -11,10 +15,6 @@ The simplest way to use LWWordCounter is to clone this repository, then build us
 | :memo: Note                                                                                                                                                                            |
 |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | if the CMake output says that a certain package is `locked by another concurrent conan process, wait...`, then run `conan remove -f <package_name>/<package_version>` in the terminal. |
-
-
-Note: if the CMake output says that a certain package is `locked by another concurrent conan
-process, wait...`, then run `conan remove -f <package_name>/<package_version>` in the terminal.
 
 
 ## Example
@@ -31,7 +31,7 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 
 This JSON file is provided as an example in the `bin` folder.
 
-Then after running the program, the console output will be:
+After running the program, the console output will be:
 
 ```
 Text file selected: ..\src\tests\test_text_files\moby_dick.txt
@@ -79,7 +79,8 @@ A summary of the file will also be serialized; the serialized file will be calle
 
 ## Running Tests
 
-To run the C++ unit tests, 
+To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists.txt` is set to
+`ON`.
 
 To run the Python unit tests, run `pytest` in the terminal in the root directory of this repository.
 
