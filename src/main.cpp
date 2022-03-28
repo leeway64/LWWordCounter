@@ -48,7 +48,7 @@ int main()
 
         const std::string input_text_file = input_file_json["input_file_name"];
         const int minOccurs = input_file_json["minimum_occurrences"];
-
+        const int kMostFrequent = input_file_json["k_most_frequent_words"]
 
         // Get the frequency of each word in the text file. i.e., word x appears y times in the
         // file.
@@ -61,6 +61,9 @@ int main()
 
 
         const std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
+        const std::map<std::string, int> kMostFrequentWordsMap =
+                CounterHelpers::getTopKWords(wordCounts, kMostFrequent);
+
         fileSummary["highest_frequency"] = mostPopularWord.second;
 
 
@@ -70,6 +73,13 @@ int main()
 
         std::cout << "File summary:" << std::endl;
         std::cout << "    Most popular word: " << mostPopularWord.first << std::endl;
+
+        std::cout << fmt::format("Top {} words:", kMostFrequent) << std::endl;
+
+        for (const auto& [key, value]: kMostFrequentWordsMap){
+            std::cout << std::setw(4) << key << std::setw(3) << value << std::endl;
+        }
+
         for(auto keyValue : fileSummary) {
             std::cout << fmt::format("    {}\t{}", keyValue.second, keyValue.first) << std::endl;
 

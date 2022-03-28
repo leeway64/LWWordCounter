@@ -14,10 +14,14 @@
       "type": "integer",
       "minimum":  1
     },
+      "k_most_frequent_words": {
+          "Description": "Find the frequency of the k most frequent words",
+          "type": "integer"
+      },
     "serialization_format": {
       "Description":"The format to serialize the file summary into",
       "type": "string"
     }
   },
-  "required": ["input_file_name", "minimum_occurrences", "serialization_format"]
+  "required": ["input_file_name", "minimum_occurrences", "k_most_frequent_words", "serialization_format"]
 }
