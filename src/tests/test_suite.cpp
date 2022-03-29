@@ -3,7 +3,6 @@
 
 #include "../WordCounter-helpers.hpp"
 
-
 std::pair<std::unordered_map<std::string, int>, std::string> getSummaryAndMostPopularWord(const std::unordered_map<std::string, int>& wordCounts)
 {
     std::pair<std::unordered_map<std::string, int>, std::string> result;
@@ -27,12 +26,12 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         std::string file1 = "../src/tests/test_files/test1.txt";
 
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file1);
-        auto testInfo = getSummaryAndMostPopularWord(wordCounts);
+        auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
 
-        REQUIRE(testInfo.first["unique_words"] == 0);
-        REQUIRE(testInfo.first["total_words"] == 0);
-        REQUIRE(testInfo.first["highest_frequency"] == 0);
-        REQUIRE(testInfo.second == "");
+        REQUIRE(summaryPopularWord.first["unique_words"] == 0);
+        REQUIRE(summaryPopularWord.first["total_words"] == 0);
+        REQUIRE(summaryPopularWord.first["highest_frequency"] == 0);
+        REQUIRE(summaryPopularWord.second == "");
     }
 
     SECTION("File with 1 word")
@@ -40,13 +39,17 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         std::string file2 = "../src/tests/test_files/test2.txt";
 
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file2);
-        auto testInfo = getSummaryAndMostPopularWord(wordCounts);
+        auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
+        auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 1);
+
+        REQUIRE(kCommonWords.size() == 1);
+        REQUIRE(kCommonWords["hello"] == 1);
 
         REQUIRE(wordCounts["hello"] == 1);
-        REQUIRE(testInfo.first["unique_words"] == 1);
-        REQUIRE(testInfo.first["total_words"] == 1);
-        REQUIRE(testInfo.first["highest_frequency"] == 1);
-        REQUIRE(testInfo.second == "hello");
+        REQUIRE(summaryPopularWord.first["unique_words"] == 1);
+        REQUIRE(summaryPopularWord.first["total_words"] == 1);
+        REQUIRE(summaryPopularWord.first["highest_frequency"] == 1);
+        REQUIRE(summaryPopularWord.second == "hello");
     }
 
     SECTION("File with 4 words")
@@ -54,16 +57,21 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         std::string file3 = "../src/tests/test_files/test3.txt";
 
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file3);
-        auto testInfo = getSummaryAndMostPopularWord(wordCounts);
+        auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
+        auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 2);
+
+        REQUIRE(kCommonWords.size() == 2);
+        REQUIRE(kCommonWords["a"] == 4);
+        REQUIRE(kCommonWords["d"] == 4);
 
         REQUIRE(wordCounts["a"] == 4);
         REQUIRE(wordCounts["b"] == 1);
         REQUIRE(wordCounts["c"] == 1);
         REQUIRE(wordCounts["d"] == 4);
-        REQUIRE(testInfo.first["unique_words"] == 4);
-        REQUIRE(testInfo.first["total_words"] == 10);
-        REQUIRE(testInfo.first["highest_frequency"] == 4);
-        REQUIRE(testInfo.second == "a");
+        REQUIRE(summaryPopularWord.first["unique_words"] == 4);
+        REQUIRE(summaryPopularWord.first["total_words"] == 10);
+        REQUIRE(summaryPopularWord.first["highest_frequency"] == 4);
+        REQUIRE(summaryPopularWord.second == "a");
     }
 
     SECTION("More complicated text file")
@@ -71,15 +79,21 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         std::string file4 = "../src/tests/test_files/test4.txt";
 
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file4);
-        auto testInfo = getSummaryAndMostPopularWord(wordCounts);
+        auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
+        auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 3);
+
+        REQUIRE(kCommonWords.size() == 3);
+        REQUIRE(kCommonWords["the"] == 16);
+        REQUIRE(kCommonWords["sat"] == 8);
+        REQUIRE(kCommonWords["mat"] == 8);
 
         REQUIRE(wordCounts["jack"] == 5);
         REQUIRE(wordCounts["play"] == 5);
         REQUIRE(wordCounts["the"] == 16);
         REQUIRE(wordCounts["cat"] == 8);
-        REQUIRE(testInfo.first["unique_words"] == 16);
-        REQUIRE(testInfo.first["total_words"] == 106);
-        REQUIRE(testInfo.first["highest_frequency"] == 16);
-        REQUIRE(testInfo.second == "the");
+        REQUIRE(summaryPopularWord.first["unique_words"] == 16);
+        REQUIRE(summaryPopularWord.first["total_words"] == 106);
+        REQUIRE(summaryPopularWord.first["highest_frequency"] == 16);
+        REQUIRE(summaryPopularWord.second == "the");
     }
 }

@@ -8,9 +8,7 @@
 
 #include "WordCounter-helpers.hpp"
 
-
 using nlohmann::json_schema::json_validator;
-
 
 int main()
 {
@@ -48,7 +46,7 @@ int main()
 
         const std::string input_text_file = input_file_json["input_file_name"];
         const int minOccurs = input_file_json["minimum_occurrences"];
-        const int kMostFrequent = input_file_json["k_most_frequent_words"]
+        const int kMostFrequent = input_file_json["k_most_frequent_words"];
 
         // Get the frequency of each word in the text file. i.e., word x appears y times in the
         // file.
@@ -74,15 +72,13 @@ int main()
         std::cout << "File summary:" << std::endl;
         std::cout << "    Most popular word: " << mostPopularWord.first << std::endl;
 
-        std::cout << fmt::format("Top {} words:", kMostFrequent) << std::endl;
-
-        for (const auto& [key, value]: kMostFrequentWordsMap){
-            std::cout << std::setw(4) << key << std::setw(3) << value << std::endl;
+        for(auto keyValue : fileSummary) {
+            std::cout << fmt::format("    {}\t{}", keyValue.first, keyValue.second) << std::endl;
         }
 
-        for(auto keyValue : fileSummary) {
-            std::cout << fmt::format("    {}\t{}", keyValue.second, keyValue.first) << std::endl;
-
+        std::cout << fmt::format("    Top {} words:", kMostFrequent) << std::endl;
+        for (const auto& [key, value]: kMostFrequentWordsMap){
+            std::cout << "\t" << fmt::format("{}\t{}", key, value)<< std::endl;
         }
         std::cout << std::endl;
 

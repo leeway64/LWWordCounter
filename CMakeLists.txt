@@ -61,7 +61,6 @@ target_link_libraries(
 )
 
 
-
 option(BuildTests "Build the unit tests" ON)
 
 if (BuildTests)

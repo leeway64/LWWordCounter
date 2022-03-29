@@ -21,10 +21,11 @@ The simplest way to use LWWordCounter is to clone this repository, then build us
 
 Input is entered using a JSON file. Let's assume that the JSON file looks like this:
 
-```
+```json
 {
-  "input_file_name": "..\\src\\tests\\test_text_files\\moby_dick.txt",
+  "input_file_name": "../src/tests/test_files/moby_dick.txt",
   "minimum_occurrences": 800,
+    "k_most_frequent_words": 5,
   "serialization_format": "UBJSON"
 }
 ```
@@ -33,15 +34,21 @@ This JSON file is provided as an example in the `bin` folder.
 
 After running the program, the console output will be:
 
-```
-Text file selected: ..\src\tests\test_text_files\moby_dick.txt
+```text
+Text file selected: ../src/tests/test_files/moby_dick.txt
 Minimum number of occurrences for printing: 800
 
 File summary:
     Most popular word: the
-    215864      total_words
-    14512       highest_frequency
-    31820       unique_words
+    total_words 215864
+    highest_frequency   14512
+    unique_words        31820
+    Top 5 words:
+        a       4663
+        and     6322
+        of      6683
+        the     14512
+        to      4599
 
 Word frequencies:
     14512       the
@@ -80,9 +87,10 @@ A summary of the file will also be serialized; the serialized file will be calle
 ## Running Tests
 
 To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists.txt` is set to
-`ON`.
+`ON`. Then, run the `WordCounter_tests` executable.
 
-To run the Python unit tests, run `pytest` in the terminal in the root directory of this repository.
+To run the Python unit tests, create a new virtual environment, install the requirements from the
+requirements file, then run `pytest` in the terminal in the root directory of this repository.
 
 
 ## Third-Party Tools

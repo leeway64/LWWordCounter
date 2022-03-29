@@ -1,5 +1,5 @@
 {
-  "input_file_name": "..\\src\\tests\\test_files\\moby_dick.txt",
+  "input_file_name": "../src/tests/test_files/moby_dick.txt",
   "minimum_occurrences": 800,
     "k_most_frequent_words": 5,
   "serialization_format": "UBJSON"

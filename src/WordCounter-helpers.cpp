@@ -5,7 +5,6 @@
 
 #include "WordCounter-helpers.hpp"
 
-
 void CounterHelpers::createInputJSON(const std::string& input_file_name)
 {
     std::ofstream output(input_file_name);
@@ -74,19 +73,13 @@ std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unorde
 }
 
 std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map<std::string, int> &wordCounts, int k){
-// create vector k elements large
-// Add k elements from the unordered map to it
-// Turn that into min heap
-// iterate through every element in unordered map. if any word has a count greater than the first
-// count of the vector, replace the first count with that
-// Sort this final vector. Put elements into ordered map.
     std::map<std::string, int> topKWords{};
 
     std::vector<std::pair<std::string, int>> topWordsHeap{};
-    topWordsHeap.reserve(k);
+    topWordsHeap.reserve(k);  // Create vector k elements large
 
     auto iter = wordCounts.begin();
-    for (int i = 0; i < k; ++i, iter++)
+    for (int i = 0; i < k; ++i, iter++)  // Add k elements from the unordered map to the vector
     {
         std::pair<std::string, int> wordCount{iter->first, iter->second};
         topWordsHeap.push_back(wordCount);
@@ -100,17 +93,24 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
     std::make_heap(topWordsHeap.begin(), topWordsHeap.end(), larger);
 
     // Insert the k most frequently appearing words into the heap
-    for (auto const& [key, val]: wordCounts)
+    for (iter; iter != wordCounts.end(); ++iter)
     {
-        if (val > topWordsHeap.front().second)
+        if (iter->second > topWordsHeap.front().second)
         {
             std::pop_heap(topWordsHeap.begin(), topWordsHeap.end(), larger);
             topWordsHeap.pop_back();
+
+            std::pair<std::string, int> key_val_pair{iter->first, iter->second};
+            topWordsHeap.push_back(key_val_pair);
+            push_heap(topWordsHeap.begin(), topWordsHeap.end(), larger);
         }
     }
-
+    auto smaller = [](std::pair<std::string, int> a, std::pair<std::string, int> b)
+    {
+        return a.first > b.first;
+    };
     // Sort the vector/heap in descending frequency order. i.e., most common word appears first.
-    std::sort(topWordsHeap.begin(), topWordsHeap.end(), larger);
+    std::sort(topWordsHeap.begin(), topWordsHeap.end(), smaller);
 
     // Put the vector's/heap's elements into a map to preserve the sorted order. An unordered map
     // would not preserve this order.
@@ -121,4 +121,3 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
 
     return topKWords;
 }
-
