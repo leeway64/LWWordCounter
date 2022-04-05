@@ -11,6 +11,11 @@
 
 using nlohmann::json_schema::json_validator;
 
+void exit_message()
+{
+    std::cout << "\nFile has been analyzed and a summary has been serialized successfully" << std::endl;
+}
+
 int main()
 {
     const std::string input_schema_name = "../schema/user_input_schema.json";
@@ -41,7 +46,7 @@ int main()
         }
         catch (const std::exception& e) {
             std::cerr << "Validation failed: " << e.what() << std::endl;
-            return 1;
+            std::exit(EXIT_FAILURE);
         }
 
 
@@ -68,10 +73,10 @@ int main()
         }
         // In the JSON file, the user might have set k to be greater than the number of unique
         // words in the text file.
-        catch(std::invalid_argument& e)
+        catch(const std::invalid_argument& e)
         {
             std::cerr << e.what() << std::endl;
-            return 1;
+            std::exit(EXIT_FAILURE);
         }
 
         fileSummary["highest_frequency"] = std::to_string(mostPopularWord.second);
@@ -90,7 +95,7 @@ int main()
 
         std::cout << fmt::format("    Top {} words:", kMostFrequent) << std::endl;
         for (const auto& [key, value]: kMostFrequentWordsMap){
-            std::cout << "\t" << fmt::format("{}\t{}", key, value)<< std::endl;
+            std::cout << "\t" << fmt::format("{}\t{}", key, value) << std::endl;
         }
         std::cout << std::endl;
 
@@ -117,28 +122,30 @@ int main()
         if (serialization_format == "BSON")
         {
             serializedData = nlohmann::json::to_bson(fileSummaryJSON);
-            output.open(output_file_name + ".bson");
+            output_file_name += ".bson";
+            output.open(output_file_name);
         } else if (serialization_format == "UBJSON")
         {
             serializedData = nlohmann::json::to_ubjson(fileSummaryJSON);
-            output.open(output_file_name + ".ubj");
+            output_file_name += ".ubj";
+            output.open(output_file_name);
         }
         else
         {
-            return 1;
+            std::cerr << "\nSerialization format must be either BSON or UBJSON" << std::endl;
+            std::exit(EXIT_FAILURE);
         }
 
         // Send the binary data into the .bson or .ubj file.
         for (const auto& element : serializedData)
         {
-//            std::string str = std::to_string(element);
-//            output.write(str.c_str(), str.length());
             output << element;
         }
-
+        std::cout << fmt::format("\nA summary of this text file has been serialized into {}", output_file_name) << std::endl;
         output.close();
-
     }
 
-	return 0;
+    // std::atexit runs the exit_message function when the program terminates (AKA exits)
+    std::atexit(exit_message);
+	std::exit(EXIT_SUCCESS);
 }
