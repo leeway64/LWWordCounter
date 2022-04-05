@@ -2,6 +2,7 @@
 #include <fstream>
 #include <algorithm>
 #include <map>
+#include <exception>
 
 #include "WordCounter-helpers.hpp"
 
@@ -72,7 +73,16 @@ std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unorde
     return popularStats;
 }
 
-std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map<std::string, int> &wordCounts, int k){
+std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map<std::string, int> &wordCounts, const int k){
+    if (k < 0)
+    {
+        throw std::invalid_argument("\"k\" must be a positive integer");
+    }
+    else if (k > wordCounts.size())
+    {
+        throw std::invalid_argument("\"k\" must be less than or equal to the number of unique words in the text file");
+    }
+
     std::map<std::string, int> topKWords{};
 
     std::vector<std::pair<std::string, int>> topWordsHeap{};

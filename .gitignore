@@ -12,5 +12,5 @@ cmake-build-*/
 .idea/
 
 # Serialization formats
-*.ubj
-*.bson
+bin/*.ubj
+bin/*.bson

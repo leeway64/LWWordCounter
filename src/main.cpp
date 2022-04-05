@@ -1,6 +1,7 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <exception>
 
 #include <fmt/core.h>
 #include <nlohmann/json.hpp>
@@ -53,16 +54,27 @@ int main()
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(input_text_file);
 
 
-        std::unordered_map<std::string, int> fileSummary;
-        fileSummary["unique_words"] = wordCounts.size();
-        fileSummary["total_words"] = CounterHelpers::getTotalWords(wordCounts);
+        std::unordered_map<std::string, std::string> fileSummary;
+        fileSummary["unique_words"] = std::to_string(wordCounts.size());
+        fileSummary["total_words"] = std::to_string(CounterHelpers::getTotalWords(wordCounts));
 
 
         const std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
-        const std::map<std::string, int> kMostFrequentWordsMap =
-                CounterHelpers::getTopKWords(wordCounts, kMostFrequent);
 
-        fileSummary["highest_frequency"] = mostPopularWord.second;
+        std::map<std::string, int> kMostFrequentWordsMap;
+        try
+        {
+            kMostFrequentWordsMap = CounterHelpers::getTopKWords(wordCounts, kMostFrequent);
+        }
+        // In the JSON file, the user might have set k to be greater than the number of unique
+        // words in the text file.
+        catch(std::invalid_argument& e)
+        {
+            std::cerr << e.what() << std::endl;
+            return 1;
+        }
+
+        fileSummary["highest_frequency"] = std::to_string(mostPopularWord.second);
 
 
         std::cout << "Text file selected: " << input_text_file << std::endl;
@@ -119,6 +131,8 @@ int main()
         // Send the binary data into the .bson or .ubj file.
         for (const auto& element : serializedData)
         {
+//            std::string str = std::to_string(element);
+//            output.write(str.c_str(), str.length());
             output << element;
         }
 
