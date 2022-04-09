@@ -16,49 +16,49 @@ class TestSuite:
     def test_UBJSON_deserialization(self):
         d2 = Deserializer("src/tests/test_files/test1_serialized_summary.ubj", "UBJSON")
         data = d2.deserialized_data
-        assert data["total_words"] == 0
-        assert data["highest_frequency"] == 0
-        assert data["unique_words"] == 0
+        assert data["total_words"] == str(0)
+        assert data["highest_frequency"] == str(0)
+        assert data["unique_words"] == str(0)
 
         d2.serialized_file_name = "src/tests/test_files/test2_serialized_summary.ubj"
         data = d2.deserialized_data
-        assert data["total_words"] == 1
-        assert data["highest_frequency"] == 1
-        assert data["unique_words"] == 1
+        assert data["total_words"] == str(1)
+        assert data["highest_frequency"] == str(1)
+        assert data["unique_words"] == str(1)
 
-        # d2.serialized_file_name = "src/tests/test_files/test3_serialized_summary.ubj"
-        # data = d2.deserialized_data
-        # assert data["total_words"] == 10
-        # assert data["highest_frequency"] == 4
-        # assert data["unique_words"] == 4
+        d2.serialized_file_name = "src/tests/test_files/test3_serialized_summary.ubj"
+        data = d2.deserialized_data
+        assert data["total_words"] == str(10)
+        assert data["highest_frequency"] == str(4)
+        assert data["unique_words"] == str(4)
 
-        # d2.serialized_file_name = "src/tests/test_files/test4_serialized_summary.ubj"
-        # data = d2.deserialized_data
-        # assert data["total_words"] == 106
-        # assert data["highest_frequency"] == 16
-        # assert data["unique_words"] == 16
+        d2.serialized_file_name = "src/tests/test_files/test4_serialized_summary.ubj"
+        data = d2.deserialized_data
+        assert data["total_words"] == str(106)
+        assert data["highest_frequency"] == str(16)
+        assert data["unique_words"] == str(16)
 
     def test_BSON_deserialization(self):
         d3 = Deserializer("src/tests/test_files/test1_serialized_summary.bson", "BSON")
         data = d3.deserialized_data
-        assert data["total_words"] == 0
-        assert data["highest_frequency"] == 0
-        assert data["unique_words"] == 0
+        assert data["total_words"] == str(0)
+        assert data["highest_frequency"] == str(0)
+        assert data["unique_words"] == str(0)
 
         d3.serialized_file_name = "src/tests/test_files/test2_serialized_summary.bson"
         data = d3.deserialized_data
-        assert data["total_words"] == 1
-        assert data["highest_frequency"] == 1
-        assert data["unique_words"] == 1
+        assert data["total_words"] == str(1)
+        assert data["highest_frequency"] == str(1)
+        assert data["unique_words"] == str(1)
 
-        # d3.serialized_file_name = "src/tests/test_files/test3_serialized_summary.bson"
-        # data = d3.deserialized_data
-        # assert data["total_words"] == 10
-        # assert data["highest_frequency"] == 4
-        # assert data["unique_words"] == 4
+        d3.serialized_file_name = "src/tests/test_files/test3_serialized_summary.bson"
+        data = d3.deserialized_data
+        assert data["total_words"] == str(10)
+        assert data["highest_frequency"] == str(4)
+        assert data["unique_words"] == str(4)
 
         d3.serialized_file_name = "src/tests/test_files/test4_serialized_summary.bson"
         data = d3.deserialized_data
-        assert data["total_words"] == 106
-        assert data["highest_frequency"] == 16
-        assert data["unique_words"] == 16
+        assert data["total_words"] == str(106)
+        assert data["highest_frequency"] == str(16)
+        assert data["unique_words"] == str(16)

@@ -11,7 +11,7 @@
 
 using nlohmann::json_schema::json_validator;
 
-void exit_message()
+void successful_exit_message()
 {
     std::cout << "\nFile has been analyzed and a summary has been serialized successfully" << std::endl;
 }
@@ -72,7 +72,7 @@ int main()
             kMostFrequentWordsMap = CounterHelpers::getTopKWords(wordCounts, kMostFrequent);
         }
         // In the JSON file, the user might have set k to be greater than the number of unique
-        // words in the text file.
+        // words in the text file, or they might have set it to a negative integer.
         catch(const std::invalid_argument& e)
         {
             std::cerr << e.what() << std::endl;
@@ -145,7 +145,7 @@ int main()
         output.close();
     }
 
-    // std::atexit runs the exit_message function when the program terminates (AKA exits)
-    std::atexit(exit_message);
+    // std::atexit runs the successful_exit_message function when the program terminates (AKA exits)
+    std::atexit(successful_exit_message);
 	std::exit(EXIT_SUCCESS);
 }

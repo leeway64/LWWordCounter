@@ -9,7 +9,8 @@ The `Deserializer` Python class is provided to deserialize this summary data.
 
 ## Installation
 
-The simplest way to use LWWordCounter is to clone this repository, then build using CMake.
+The simplest way to use LWWordCounter is to clone this repository, then build using CMake; I used
+[CLion](https://www.jetbrains.com/clion/) as the primary development environment.
 
 
 | :memo: Note                                                                                                                                                                            |

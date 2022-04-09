@@ -2,7 +2,6 @@
 #include <fstream>
 #include <algorithm>
 #include <map>
-#include <exception>
 
 #include "WordCounter-helpers.hpp"
 
@@ -30,6 +29,7 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
     std::ifstream input(input_file_name);
     while(input >> next)
     {
+        // Convert each word to lowercase
         std::transform(next.begin(), next.end(), next.begin(), tolower);
         if(!wordCounts.contains(next))
         {
@@ -48,7 +48,7 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
 int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCounts)
 {
     int wordsSum = 0;
-    for (auto keyValue : wordCounts)
+    for (const auto& keyValue : wordCounts)
     {
         wordsSum += keyValue.second;
     }
@@ -61,7 +61,7 @@ std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unorde
     std::pair<std::string, int> popularStats;
     std::string mostPopularWord;
     int highestFrequency = 0;
-    for(auto keyValue : wordCounts) {
+    for(const auto& keyValue : wordCounts) {
         if (keyValue.second >= highestFrequency)
         {
             highestFrequency = keyValue.second;
@@ -74,6 +74,8 @@ std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unorde
 }
 
 std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map<std::string, int> &wordCounts, const int k){
+    std::map<std::string, int> topKWords{};
+
     if (k < 0)
     {
         throw std::invalid_argument("\"k\" must be a positive integer");
@@ -82,8 +84,10 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
     {
         throw std::invalid_argument("\"k\" must be less than or equal to the number of unique words in the text file");
     }
-
-    std::map<std::string, int> topKWords{};
+    else if (k == 0)
+    {
+        return topKWords;
+    }
 
     std::vector<std::pair<std::string, int>> topWordsHeap{};
     topWordsHeap.reserve(k);  // Create vector k elements large
@@ -115,6 +119,7 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
             push_heap(topWordsHeap.begin(), topWordsHeap.end(), larger);
         }
     }
+
     auto smaller = [](std::pair<std::string, int> a, std::pair<std::string, int> b)
     {
         return a.first > b.first;
