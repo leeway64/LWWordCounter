@@ -96,4 +96,13 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 16);
         REQUIRE(summaryPopularWord.second == "the");
     }
+
+    SECTION("Complicated text file that includes punctuation and non-word characters")
+    {
+        std::string file4 = "../src/tests/test_files/test5.txt";
+
+        std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file4);
+        auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
+        auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 4);
+    }
 }

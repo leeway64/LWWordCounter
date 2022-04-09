@@ -87,11 +87,31 @@ A summary of the file will also be serialized; the serialized file will be calle
 
 ## Running Tests
 
+### C++ Tests
+
 To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists.txt` is set to
 `ON`. Then, run the `WordCounter_tests` executable.
 
-To run the Python unit tests, create a new virtual environment, install the requirements from the
-requirements file, then run `pytest` in the terminal in the root directory of this repository.
+
+### Python Tests
+
+In the root directory of this project, if using Linux, run:
+
+.. code-block::
+
+    $ python3 -m venv .venv
+    $ source .venv/bin/activate
+    $ pip install -r requirements.txt
+    $ pytest
+
+If using Windows, run:
+
+.. code-block::
+
+    $ py -3 -m venv .venv
+    $ .venv/Scripts/activate
+    $ pip install -r requirements.txt
+    $ pytest
 
 
 ## Third-Party Tools

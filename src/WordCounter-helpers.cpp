@@ -2,6 +2,7 @@
 #include <fstream>
 #include <algorithm>
 #include <map>
+#include <regex>
 
 #include "WordCounter-helpers.hpp"
 
@@ -27,17 +28,26 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
     std::unordered_map<std::string, int> wordCounts;
     std::string next;
     std::ifstream input(input_file_name);
+    // Split word based on space
     while(input >> next)
     {
         // Convert each word to lowercase
         std::transform(next.begin(), next.end(), next.begin(), tolower);
-        if(!wordCounts.contains(next))
-        {
-            wordCounts[next] = 1;
-        }
-        else
-        {
-            wordCounts[next]++;
+
+        // Split word based on regular expression
+        /// TODO:
+        ///   - select the correct regular expression. Regular expression should match
+        ///   - everything that is not a word character.
+        std::regex rgx("\\s+");
+        std::sregex_token_iterator iter(next.begin(), next.end(), rgx, -1);
+        std::sregex_token_iterator end;
+
+        for (iter; iter != end; ++iter) {
+            if (!wordCounts.contains(*iter)) {
+                wordCounts[next] = 1;
+            } else {
+                wordCounts[next]++;
+            }
         }
     }
     input.close();
