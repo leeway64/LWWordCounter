@@ -14,14 +14,12 @@ void CounterHelpers::createInputJSON(const std::string& input_file_name)
     output.close();
 }
 
-
 void CounterHelpers::getJSON(const std::string& file_name, nlohmann::json& JSONVariable)
 {
     std::ifstream input(file_name);
     input >> JSONVariable;
     input.close();
 }
-
 
 std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::string& input_file_name)
 {
@@ -34,26 +32,29 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
         // Convert each word to lowercase
         std::transform(next.begin(), next.end(), next.begin(), tolower);
 
-        // Split word based on regular expression
-        /// TODO:
-        ///   - select the correct regular expression. Regular expression should match
-        ///   - everything that is not a word character.
-        std::regex rgx("\\s+");
+        // Split word based on regular expression. Regular expression matches everything that is
+        // not a through z, A through Z, 0 through 9, or an apostrophe.
+        std::regex rgx("[^a-zA-Z0-9']");
         std::sregex_token_iterator iter(next.begin(), next.end(), rgx, -1);
         std::sregex_token_iterator end;
 
         for (iter; iter != end; ++iter) {
-            if (!wordCounts.contains(*iter)) {
-                wordCounts[next] = 1;
-            } else {
-                wordCounts[next]++;
+            std::string word = *iter;
+            // To handle the case where the string is a back slash or forward slash character.
+            if (word != "")
+            {
+                if (!wordCounts.contains(word)) {
+                    wordCounts[word] = 1;
+                } else {
+                    wordCounts[word]++;
+                }
             }
+
         }
     }
     input.close();
     return wordCounts;
 }
-
 
 int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCounts)
 {
@@ -64,7 +65,6 @@ int CounterHelpers::getTotalWords(std::unordered_map<std::string, int> wordCount
     }
     return wordsSum;
 }
-
 
 std::pair<std::string, int> CounterHelpers::getMostPopularWord(const std::unordered_map<std::string, int>& wordCounts)
 {

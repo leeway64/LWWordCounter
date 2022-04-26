@@ -38,8 +38,11 @@ class TestSuite:
         assert data["highest_frequency"] == str(16)
         assert data["unique_words"] == str(16)
 
-        # d2.serialized_file_name = "src/tests/test_files/test5_serialized_summary.ubj"
-        # data = d2.deserialized_data
+        d2.serialized_file_name = "src/tests/test_files/test5_serialized_summary.ubj"
+        data = d2.deserialized_data
+        assert data["total_words"] == str(38)
+        assert data["highest_frequency"] == str(3)
+        assert data["unique_words"] == str(33)
 
     def test_BSON_deserialization(self):
         d3 = Deserializer("src/tests/test_files/test1_serialized_summary.bson", "BSON")
@@ -66,6 +69,8 @@ class TestSuite:
         assert data["highest_frequency"] == str(16)
         assert data["unique_words"] == str(16)
 
-        # d3.serialized_file_name = "src/tests/test_files/test5_serialized_summary.bson"
-        # data = d3.deserialized_data
-
+        d3.serialized_file_name = "src/tests/test_files/test5_serialized_summary.bson"
+        data = d3.deserialized_data
+        assert data["total_words"] == str(38)
+        assert data["highest_frequency"] == str(3)
+        assert data["unique_words"] == str(33)

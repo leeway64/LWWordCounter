@@ -97,22 +97,21 @@ To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists
 
 In the root directory of this project, if using Linux, run:
 
-.. code-block::
-
+```
     $ python3 -m venv .venv
     $ source .venv/bin/activate
     $ pip install -r requirements.txt
     $ pytest
+```
 
 If using Windows, run:
 
-.. code-block::
-
+```
     $ py -3 -m venv .venv
     $ .venv/Scripts/activate
     $ pip install -r requirements.txt
     $ pytest
-
+```
 
 ## Third-Party Tools
 - [CMake](https://cmake.org/) (BSD-3-Clause): Build system generator.

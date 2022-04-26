@@ -104,5 +104,20 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file4);
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 4);
+
+        REQUIRE(kCommonWords.size() == 4);
+        REQUIRE(kCommonWords["the"] == 3);
+        REQUIRE(kCommonWords["of"] == 2);
+        REQUIRE(kCommonWords["a"] == 3);
+        REQUIRE(kCommonWords["dream"] == 1);
+
+        REQUIRE(wordCounts["dragons"] == 1);
+        REQUIRE(wordCounts["swords"] == 1);
+        REQUIRE(wordCounts["spring"] == 1);
+        REQUIRE(wordCounts["dance"] == 1);
+        REQUIRE(summaryPopularWord.first["unique_words"] == 33);
+        REQUIRE(summaryPopularWord.first["total_words"] == 38);
+        REQUIRE(summaryPopularWord.first["highest_frequency"] == 3);
+        REQUIRE(summaryPopularWord.second == "a");
     }
 }
