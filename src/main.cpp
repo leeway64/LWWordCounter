@@ -51,8 +51,9 @@ int main()
 
 
         const std::string input_text_file = input_file_json["input_file_name"];
-        const int minOccurs = input_file_json["minimum_occurrences"];
-        const int kMostFrequent = input_file_json["k_most_frequent_words"];
+        const int minOccurs = input_file_json["/statistics/minimum_occurrences"_json_pointer];
+        const int kMostFrequent = input_file_json["/statistics/k_most_frequent_words"_json_pointer];
+        const int word_length_to_find = input_file_json["/statistics/word_length_to_find"_json_pointer];
 
         // Get the frequency of each word in the text file. i.e., word x appears y times in the
         // file.

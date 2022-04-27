@@ -1,27 +1,40 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "User input",
-  "description": "The user-defined parameters of LWWordCounter",
-  "type": "object",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "User input",
+	"description": "The user-defined parameters of LWWordCounter",
+	"type": "object",
 
-  "Properties": {
-    "input_file_name": {
-      "description": "The name of the text file to visualize",
-      "type": "string"
-    },
-    "minimum_occurrences": {
-      "description": "The minimum occurrences to display",
-      "type": "integer",
-      "minimum":  1
-    },
-      "k_most_frequent_words": {
-          "Description": "Find the frequency of the k most frequent words",
-          "type": "integer"
-      },
-    "serialization_format": {
-      "Description":"The format to serialize the file summary into",
-      "type": "string"
-    }
-  },
-  "required": ["input_file_name", "minimum_occurrences", "k_most_frequent_words", "serialization_format"]
+	"properties": {
+		"input_file_name": {
+		  "description": "The name of the text file to visualize",
+		  "type": "string"
+		},
+		"statistics": {
+            "description": "Numerical information about the text file to analyze",
+            "type": "object",
+            "properties": {
+                "minimum_occurrences": {
+                    "description": "The minimum occurrences to display",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "k_most_frequent_words": {
+                    "Description": "The k most common words and their frequency",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "word_length_to_find": {
+                    "Description": "The word length to find the occurrences of",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "required": ["minimum_occurrences", "k_most_frequent_words", "word_length_to_find"]
+		},
+		"serialization_format": {
+		  "Description":"The format to serialize the file summary into",
+		  "type": "string"
+		}
+	},
+	"required": ["input_file_name", "statistics", "serialization_format"]
 }

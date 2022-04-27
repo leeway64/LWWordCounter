@@ -35,17 +35,22 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
         // Split word based on regular expression. Regular expression matches everything that is
         // not a through z, A through Z, 0 through 9, or an apostrophe.
         std::regex rgx("[^a-zA-Z0-9']");
+
         std::sregex_token_iterator iter(next.begin(), next.end(), rgx, -1);
         std::sregex_token_iterator end;
 
-        for (iter; iter != end; ++iter) {
+        for (iter; iter != end; ++iter)
+        {
             std::string word = *iter;
             // To handle the case where the string is a back slash or forward slash character.
             if (word != "")
             {
-                if (!wordCounts.contains(word)) {
+                if (!wordCounts.contains(word))
+                {
                     wordCounts[word] = 1;
-                } else {
+                }
+                else
+                {
                     wordCounts[word]++;
                 }
             }

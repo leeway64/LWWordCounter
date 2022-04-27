@@ -115,13 +115,8 @@ If using Windows, run:
 
 ## Third-Party Tools
 - [CMake](https://cmake.org/) (BSD-3-Clause): Build system generator.
-
 - [Conan](https://conan.io/) (MIT License): Package manager.
-
 - [Catch2](https://github.com/catchorg/Catch2/tree/v2.x) (MIT License): Unit testing framework.
-
 - [json](https://github.com/nlohmann/json) (MIT License): json is a C++ JSON library.
-
 - [{fmt}](https://github.com/fmtlib/fmt) (MIT License): Formatting library.
-
 - [json-schema-validator](https://github.com/pboettch/json-schema-validator) (MIT License): library for JSON schema validation.
