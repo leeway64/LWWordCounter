@@ -2,7 +2,9 @@
 #include <fstream>
 #include <algorithm>
 #include <map>
+#include <unordered_set>
 #include <regex>
+#include <optional>
 
 #include "WordCounter-helpers.hpp"
 
@@ -150,4 +152,63 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
     }
 
     return topKWords;
+}
+
+/// TODO: write tests
+std::deque<std::string> get_longest_shortest_words(const std::unordered_map<std::string, int> &wordCounts)
+{
+    auto iter = wordCounts.begin();
+    std::string shortest_word = iter->first;
+    std::string longest_word{};
+
+    for (const auto& [key, value]: wordCounts)
+    {
+        if (key.length() > longest_word.length())
+        {
+            longest_word = key;
+        }
+        if (key.length() < shortest_word.length())
+        {
+            shortest_word = key;
+        }
+    }
+
+    // A deque is a double-ended queue
+    std::deque<std::string> longest_shortest_words{};
+    longest_shortest_words.push_front(longest_word);
+    longest_shortest_words.push_back(shortest_word);
+    return longest_shortest_words;
+}
+
+// A union can only hold one of its members at a time
+union num_items_union
+{
+    int num_items;
+    // A byte is a separate data type that implements a byte
+    std::byte bits;
+    // A pointer that can hold a pointer to void
+    std::uintptr_t ptr;
+};
+
+/// TODO: write tests
+std::optional<num_items_union> get_number_of_words_of_certain_length(const std::unordered_map<std::string, int> &wordCounts, const int word_length_to_find)
+{
+    std::unordered_set<int> lengths_set;
+    std::vector<std::string> key_vector{};
+    for (const auto& [key, value]: wordCounts)
+    {
+        lengths_set.insert(key.length());
+        key_vector.push_back(key);
+    }
+    // Find if the target word exists in the unordered set
+    auto contains_length = std::find(begin(lengths_set), end(lengths_set), word_length_to_find);
+    if (contains_length != std::end(lengths_set))
+    {
+        return {};
+    }
+    // Count how many words of the target length exist in the wordCounts map
+    num_items_union num_items;
+    num_items.num_items = std::count_if(key_vector.begin(), key_vector.end(), [word_length_to_find](std::string word){return word.length() == word_length_to_find;});
+
+    return num_items;
 }

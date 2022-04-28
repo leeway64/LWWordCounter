@@ -42,14 +42,13 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 1);
 
-        REQUIRE(kCommonWords.size() == 1);
-        REQUIRE(kCommonWords["hello"] == 1);
-
         REQUIRE(wordCounts["hello"] == 1);
         REQUIRE(summaryPopularWord.first["unique_words"] == 1);
         REQUIRE(summaryPopularWord.first["total_words"] == 1);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 1);
         REQUIRE(summaryPopularWord.second == "hello");
+        REQUIRE(kCommonWords.size() == 1);
+        REQUIRE(kCommonWords["hello"] == 1);
     }
 
     SECTION("File with 4 words")
@@ -60,10 +59,6 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 2);
 
-        REQUIRE(kCommonWords.size() == 2);
-        REQUIRE(kCommonWords["a"] == 4);
-        REQUIRE(kCommonWords["d"] == 4);
-
         REQUIRE(wordCounts["a"] == 4);
         REQUIRE(wordCounts["b"] == 1);
         REQUIRE(wordCounts["c"] == 1);
@@ -72,6 +67,9 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         REQUIRE(summaryPopularWord.first["total_words"] == 10);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 4);
         REQUIRE(summaryPopularWord.second == "a");
+        REQUIRE(kCommonWords.size() == 2);
+        REQUIRE(kCommonWords["a"] == 4);
+        REQUIRE(kCommonWords["d"] == 4);
     }
 
     SECTION("More complicated text file")
@@ -82,11 +80,6 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 3);
 
-        REQUIRE(kCommonWords.size() == 3);
-        REQUIRE(kCommonWords["the"] == 16);
-        REQUIRE(kCommonWords["sat"] == 8);
-        REQUIRE(kCommonWords["mat"] == 8);
-
         REQUIRE(wordCounts["jack"] == 5);
         REQUIRE(wordCounts["play"] == 5);
         REQUIRE(wordCounts["the"] == 16);
@@ -95,6 +88,10 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         REQUIRE(summaryPopularWord.first["total_words"] == 106);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 16);
         REQUIRE(summaryPopularWord.second == "the");
+        REQUIRE(kCommonWords.size() == 3);
+        REQUIRE(kCommonWords["the"] == 16);
+        REQUIRE(kCommonWords["sat"] == 8);
+        REQUIRE(kCommonWords["mat"] == 8);
     }
 
     SECTION("Complicated text file that includes punctuation and non-word characters")
@@ -105,12 +102,6 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 4);
 
-        REQUIRE(kCommonWords.size() == 4);
-        REQUIRE(kCommonWords["the"] == 3);
-        REQUIRE(kCommonWords["of"] == 2);
-        REQUIRE(kCommonWords["a"] == 3);
-        REQUIRE(kCommonWords["dream"] == 1);
-
         REQUIRE(wordCounts["dragons"] == 1);
         REQUIRE(wordCounts["swords"] == 1);
         REQUIRE(wordCounts["spring"] == 1);
@@ -119,5 +110,10 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         REQUIRE(summaryPopularWord.first["total_words"] == 38);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 3);
         REQUIRE(summaryPopularWord.second == "a");
+        REQUIRE(kCommonWords.size() == 4);
+        REQUIRE(kCommonWords["the"] == 3);
+        REQUIRE(kCommonWords["of"] == 2);
+        REQUIRE(kCommonWords["a"] == 3);
+        REQUIRE(kCommonWords["dream"] == 1);
     }
 }
