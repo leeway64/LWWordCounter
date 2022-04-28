@@ -56,7 +56,6 @@ std::unordered_map<std::string, int> CounterHelpers::getWordCounts(const std::st
                     wordCounts[word]++;
                 }
             }
-
         }
     }
     input.close();
@@ -155,11 +154,16 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
 }
 
 /// TODO: write tests
-std::deque<std::string> get_longest_shortest_words(const std::unordered_map<std::string, int> &wordCounts)
+std::deque<std::string> CounterHelpers::get_longest_shortest_words(const std::unordered_map<std::string, int> &wordCounts)
 {
-    auto iter = wordCounts.begin();
-    std::string shortest_word = iter->first;
-    std::string longest_word{};
+    std::string shortest_word{};
+    if (wordCounts.size() > 0)
+    {
+        shortest_word = wordCounts.begin()->first;
+    }
+
+    // decltype, in this case, sets longest_word to the same data type as shortest_word
+    decltype(shortest_word) longest_word{};
 
     for (const auto& [key, value]: wordCounts)
     {
@@ -180,18 +184,9 @@ std::deque<std::string> get_longest_shortest_words(const std::unordered_map<std:
     return longest_shortest_words;
 }
 
-// A union can only hold one of its members at a time
-union num_items_union
-{
-    int num_items;
-    // A byte is a separate data type that implements a byte
-    std::byte bits;
-    // A pointer that can hold a pointer to void
-    std::uintptr_t ptr;
-};
-
 /// TODO: write tests
-std::optional<num_items_union> get_number_of_words_of_certain_length(const std::unordered_map<std::string, int> &wordCounts, const int word_length_to_find)
+std::optional<CounterHelpers::info> CounterHelpers::get_certain_length_words_frequency
+                                (const std::unordered_map<std::string, int> &wordCounts, const int word_length_to_find)
 {
     std::unordered_set<int> lengths_set;
     std::vector<std::string> key_vector{};
@@ -207,8 +202,8 @@ std::optional<num_items_union> get_number_of_words_of_certain_length(const std::
         return {};
     }
     // Count how many words of the target length exist in the wordCounts map
-    num_items_union num_items;
-    num_items.num_items = std::count_if(key_vector.begin(), key_vector.end(), [word_length_to_find](std::string word){return word.length() == word_length_to_find;});
+    CounterHelpers::info num_items;
+    num_items.num_words = std::count_if(key_vector.begin(), key_vector.end(), [word_length_to_find](std::string word){return word.length() == word_length_to_find;});
 
     return num_items;
 }

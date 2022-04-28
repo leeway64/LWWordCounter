@@ -65,8 +65,12 @@ int main()
         fileSummary["unique_words"] = std::to_string(wordCounts.size());
         fileSummary["total_words"] = std::to_string(CounterHelpers::getTotalWords(wordCounts));
 
+        CounterHelpers::info default_union;
 
         const std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
+        std::deque<std::string> longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        const auto certain_length_words_frequency = CounterHelpers::get_certain_length_words_frequency
+                                                            (wordCounts, word_length_to_find).value_or(default_union);
 
         std::map<std::string, int> kMostFrequentWordsMap;
         try
@@ -90,10 +94,19 @@ int main()
 
         std::cout << "File summary:" << std::endl;
         std::cout << "    Most popular word: " << mostPopularWord.first << std::endl;
+        std::cout << std::endl;
 
-        for(auto keyValue : fileSummary) {
+        std::cout << "    Longest word: " << longest_shortest.front() << std::endl;
+        std::cout << "    Shortest word: " << longest_shortest.back() << std::endl;
+        std::cout << std::endl;
+
+        std::cout << fmt::format("    Number of words with length {}:\t{}", word_length_to_find, certain_length_words_frequency.num_words) << std::endl;
+        std::cout << std::endl;
+
+        for(const auto& keyValue : fileSummary) {
             std::cout << fmt::format("    {}\t{}", keyValue.first, keyValue.second) << std::endl;
         }
+        std::cout << std::endl;
 
         std::cout << fmt::format("    Top {} words:", kMostFrequent) << std::endl;
         for (const auto& [key, value]: kMostFrequentWordsMap){
