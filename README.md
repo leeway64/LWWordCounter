@@ -97,7 +97,7 @@ To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists
 
 In the root directory of this project, if using Linux, run:
 
-```
+```sh
     $ python3 -m venv .venv
     $ source .venv/bin/activate
     $ pip install -r requirements.txt
@@ -106,7 +106,7 @@ In the root directory of this project, if using Linux, run:
 
 If using Windows, run:
 
-```
+```sh
     $ py -3 -m venv .venv
     $ .venv/Scripts/activate
     $ pip install -r requirements.txt
