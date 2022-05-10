@@ -153,7 +153,6 @@ std::map<std::string, int> CounterHelpers::getTopKWords(const std::unordered_map
     return topKWords;
 }
 
-/// TODO: write tests
 std::deque<std::string> CounterHelpers::get_longest_shortest_words(const std::unordered_map<std::string, int> &wordCounts)
 {
     std::string shortest_word{};
@@ -195,15 +194,19 @@ std::optional<CounterHelpers::info> CounterHelpers::get_certain_length_words_fre
         lengths_set.insert(key.length());
         key_vector.push_back(key);
     }
-    // Find if the target word exists in the unordered set
-    auto contains_length = std::find(begin(lengths_set), end(lengths_set), word_length_to_find);
-    if (contains_length != std::end(lengths_set))
+    // Find if the target word length exists in the unordered set
+    const auto contains_length = std::find(std::begin(lengths_set), std::end(lengths_set), word_length_to_find);
+    if (contains_length == std::end(lengths_set))
     {
         return {};
     }
     // Count how many words of the target length exist in the wordCounts map
     CounterHelpers::info num_items;
-    num_items.num_words = std::count_if(key_vector.begin(), key_vector.end(), [word_length_to_find](std::string word){return word.length() == word_length_to_find;});
+    // count_if counts the number of elements for which the function (last argument) returns true.
+    // The "[]" in a lambda is its capture clause. It can access variables from its current scope.
+    // The "()" in a lambda is kind of like a parameter list for a function.
+    num_items.num_words = std::count_if(key_vector.begin(), key_vector.end(),
+                                [word_length_to_find](std::string word){return word.length() == word_length_to_find;});
 
     return num_items;
 }

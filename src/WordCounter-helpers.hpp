@@ -53,7 +53,7 @@ namespace CounterHelpers
     std::deque<std::string> get_longest_shortest_words(const std::unordered_map<std::string, int> &wordCounts);
 
     /// @param wordCounts is the unordered_map containing the frequency of each word in the text file.
-    /// @param
+    /// @param word_length_to_find is the target word length to find the frequency of.
     /// @return An info union, with its num_words field holding the number of words that have lengths equal to target.
     std::optional<info> get_certain_length_words_frequency(
                                 const std::unordered_map<std::string, int> &wordCounts, const int word_length_to_find);

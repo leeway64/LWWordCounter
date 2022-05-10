@@ -43,14 +43,14 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 1);
         auto longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
-        auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency(wordCounts, 1);
+        auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency(wordCounts, 5);
 
         REQUIRE(summaryPopularWord.second == "hello");
 
         REQUIRE(longest_shortest.front() == "hello");
         REQUIRE(longest_shortest.back() == "hello");
 
-        //REQUIRE(certain_length_frequency->num_words == 1);
+        REQUIRE(certain_length_frequency->num_words == 1);
 
         REQUIRE(summaryPopularWord.first["total_words"] == 1);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 1);
@@ -73,8 +73,8 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
 
         REQUIRE(summaryPopularWord.second == "a");
 
-        //REQUIRE(longest_shortest.front() == "a");
-        //REQUIRE(longest_shortest.back() == "a");
+        REQUIRE(longest_shortest.front() == "c");
+        REQUIRE(longest_shortest.back() == "c");
 
         REQUIRE(summaryPopularWord.first["total_words"] == 10);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 4);
@@ -131,7 +131,7 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         REQUIRE(summaryPopularWord.second == "a");
 
         REQUIRE(longest_shortest.front() == "dragons");
-        REQUIRE(longest_shortest.back() == "a");
+        REQUIRE(longest_shortest.back() == "4");
 
         REQUIRE(summaryPopularWord.first["total_words"] == 38);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 3);
