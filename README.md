@@ -24,61 +24,80 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 
 ```json
 {
-  "input_file_name": "../src/tests/test_files/moby_dick.txt",
-  "minimum_occurrences": 800,
-    "k_most_frequent_words": 5,
-  "serialization_format": "UBJSON"
+    "input_file_name": "../src/tests/test_files/moby_dick.txt",
+    "statistics":
+    {
+        "minimum_occurrences": 900,
+        "k_most_frequent_words": 5,
+        "word_length_to_find": 4
+    },
+    "serialization_format": "UBJSON"
 }
 ```
 
-This JSON file is provided as an example in the `bin` folder.
+This JSON file is provided as an example in the [`bin`](bin) folder.
 
 After running the program, the console output will be:
 
 ```text
 Text file selected: ../src/tests/test_files/moby_dick.txt
-Minimum number of occurrences for printing: 800
 
 File summary:
     Most popular word: the
-    total_words 215864
-    highest_frequency   14512
-    unique_words        31820
-    Top 5 words:
-        a       4663
-        and     6322
-        of      6683
-        the     14512
-        to      4599
 
+    Longest word: uninterpenetratingly
+    Shortest word: 0
+
+    Number of words with length 4:      1359
+
+    highest_frequency   14727
+    unique_words        17342
+    total_words 222673
+
+    Top 5 words:
+        a       4805
+        and     6515
+        of      6747
+        the     14727
+        to      4709
+
+Minimum number of occurrences for printing: 900
 Word frequencies:
-    14512       the
-    1555        for
-    1714        as
-    4599        to
-    1671        but
-    1100        from
-    961 on
-    1750        with
-    4663        a
-    1279        this
-    1578        was
-    1777        it
-    4126        in
-    1723        i
-    1683        he
-    843 you
-    6683        of
-    1093        not
-    878 so
-    6322        and
-    1005        be
-    2748        that
-    1360        all
-    2485        his
-    1177        by
-    1310        at
-    1601        is
+    14727       the
+    1069        him
+    1770        with
+    1644        for
+    1545        all
+    1066        so
+    1822        s
+    3100        that
+    2532        his
+    1064        be
+    1443        this
+    1333        at
+    969 you
+    6747        of
+    6515        and
+    1747        is
+    4245        in
+    1244        whale
+    1105        from
+    4805        a
+    4709        to
+    1752        as
+    1180        not
+    1822        but
+    1232        by
+    925 one
+    2537        it
+    1900        he
+    2127        i
+    1647        was
+    1073        on
+
+A summary of this text file has been serialized into moby_dick_serialized_summary.ubj
+
+File has been analyzed and a summary has been serialized successfully
 ```
 
 A summary of the file will also be serialized; the serialized file will be called
@@ -89,8 +108,8 @@ A summary of the file will also be serialized; the serialized file will be calle
 
 ### C++ Tests
 
-To run the C++ unit tests, make sure that the `BuildTests` option in `CMakeLists.txt` is set to
-`ON`. Then, run the `WordCounter_tests` executable.
+To run the C++ unit tests, make sure that the `BuildTests` option in
+[`CMakeLists.txt`](CMakeLists.txt) is set to `ON`. Then, run the `WordCounter_tests` executable.
 
 
 ### Python Tests

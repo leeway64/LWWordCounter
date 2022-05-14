@@ -9,15 +9,16 @@ this project follows [semantic versioning](https://semver.org/).
 
 - None
 
-## [1.0.3] - 2022-5-
+## [1.1.0] - 2022-5-13
 ### Added
 
-- 
+- Feature for finding the longest and shortest words
+- Feature for finding the number of words of a certain length
 
 ## [1.0.2] - 2022-3-28
 ### Added
 
-- Feature for finding the top "k" most frequently appearing words in a text file.
+- Feature for finding the top "k" most frequently appearing words in a text file
 
 ## [1.0.1] - 2022-3-14
 ### Added
