@@ -50,25 +50,32 @@ int main()
         }
 
 
+        // Get information from the JSON file
         const std::string input_text_file = input_file_json["input_file_name"];
         // Use JSON pointers to access values
         const int minOccurs = input_file_json["/statistics/minimum_occurrences"_json_pointer];
         const int kMostFrequent = input_file_json["/statistics/k_most_frequent_words"_json_pointer];
         const int word_length_to_find = input_file_json["/statistics/word_length_to_find"_json_pointer];
+        std::string serialization_format = input_file_json["serialization_format"];
 
         // Get the frequency of each word in the text file. i.e., word x appears y times in the
         // file.
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(input_text_file);
 
 
+        // Create and populate the fileSummary unordered map (find the total words, the number of
+        // unique words, and the frequency of the most popular word).
         std::unordered_map<std::string, std::string> fileSummary;
-        fileSummary["unique_words"] = std::to_string(wordCounts.size());
         fileSummary["total_words"] = std::to_string(CounterHelpers::getTotalWords(wordCounts));
-
-        CounterHelpers::info default_union;
-
+        fileSummary["unique_words"] = std::to_string(wordCounts.size());
         const std::pair<std::string, int> mostPopularWord = CounterHelpers::getMostPopularWord(wordCounts);
+        fileSummary["highest_frequency"] = std::to_string(mostPopularWord.second);
+
+
+        // Find other file statistics (longest and shortest words, number of words of a target
+        // length, top k most popular words).
         std::deque<std::string> longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        CounterHelpers::info default_union;
         const auto certain_length_words_frequency = CounterHelpers::get_certain_length_words_frequency
                                                             (wordCounts, word_length_to_find).value_or(default_union);
 
@@ -85,11 +92,8 @@ int main()
             std::exit(EXIT_FAILURE);
         }
 
-        fileSummary["highest_frequency"] = std::to_string(mostPopularWord.second);
-
 
         std::cout << "Text file selected: " << input_text_file << std::endl;
-        std::cout << "Minimum number of occurrences for printing: " << minOccurs << std::endl;
         std::cout << std::endl;
 
         std::cout << "File summary:" << std::endl;
@@ -114,6 +118,7 @@ int main()
         }
         std::cout << std::endl;
 
+        std::cout << "Minimum number of occurrences for printing: " << minOccurs << std::endl;
         std::cout << "Word frequencies:" << std::endl;
         // Print out the word and the corresponding frequency, assuming the frequency is above the
         // minOccurs threshold.
@@ -126,7 +131,6 @@ int main()
 
 
         nlohmann::json fileSummaryJSON(fileSummary);
-        std::string serialization_format = input_file_json["serialization_format"];
         std::vector<std::uint8_t> serializedData;
 
         // Get the name (without the extension) of the input text file.
@@ -139,7 +143,8 @@ int main()
             serializedData = nlohmann::json::to_bson(fileSummaryJSON);
             output_file_name += ".bson";
             output.open(output_file_name);
-        } else if (serialization_format == "UBJSON")
+        }
+        else if (serialization_format == "UBJSON")
         {
             serializedData = nlohmann::json::to_ubjson(fileSummaryJSON);
             output_file_name += ".ubj";

@@ -183,7 +183,6 @@ std::deque<std::string> CounterHelpers::get_longest_shortest_words(const std::un
     return longest_shortest_words;
 }
 
-/// TODO: write tests
 std::optional<CounterHelpers::info> CounterHelpers::get_certain_length_words_frequency
                                 (const std::unordered_map<std::string, int> &wordCounts, const int word_length_to_find)
 {

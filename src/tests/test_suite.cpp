@@ -27,12 +27,24 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
 
         std::unordered_map<std::string, int> wordCounts = CounterHelpers::getWordCounts(file1);
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
+        auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 0);
+        auto longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        CounterHelpers::info default_union;
+        const auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency
+                (wordCounts, 900).value_or(default_union);
 
         REQUIRE(summaryPopularWord.second == "");
+
+        REQUIRE(longest_shortest.front() == "");
+        REQUIRE(longest_shortest.back() == "");
+
+        REQUIRE(certain_length_frequency.num_words == 0);
 
         REQUIRE(summaryPopularWord.first["total_words"] == 0);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 0);
         REQUIRE(summaryPopularWord.first["unique_words"] == 0);
+
+        REQUIRE(kCommonWords.size() == 0);
     }
 
     SECTION("File with 1 word")
@@ -70,11 +82,14 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 2);
         auto longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency(wordCounts, 1);
 
         REQUIRE(summaryPopularWord.second == "a");
 
         REQUIRE(longest_shortest.front() == "c");
         REQUIRE(longest_shortest.back() == "c");
+
+        REQUIRE(certain_length_frequency->num_words == 4);
 
         REQUIRE(summaryPopularWord.first["total_words"] == 10);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 4);
@@ -98,11 +113,14 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 3);
         auto longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency(wordCounts, 3);
 
         REQUIRE(summaryPopularWord.second == "the");
 
         REQUIRE(longest_shortest.front() == "makes");
         REQUIRE(longest_shortest.back() == "a");
+
+        REQUIRE(certain_length_frequency->num_words == 8);
 
         REQUIRE(summaryPopularWord.first["total_words"] == 106);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 16);
@@ -127,11 +145,14 @@ TEST_CASE("Test LWWordCounter", "[LWWordCounter]")
         auto summaryPopularWord = getSummaryAndMostPopularWord(wordCounts);
         auto kCommonWords = CounterHelpers::getTopKWords(wordCounts, 4);
         auto longest_shortest = CounterHelpers::get_longest_shortest_words(wordCounts);
+        auto certain_length_frequency = CounterHelpers::get_certain_length_words_frequency(wordCounts, 4);
 
         REQUIRE(summaryPopularWord.second == "a");
 
         REQUIRE(longest_shortest.front() == "dragons");
         REQUIRE(longest_shortest.back() == "4");
+
+        REQUIRE(certain_length_frequency->num_words == 6);
 
         REQUIRE(summaryPopularWord.first["total_words"] == 38);
         REQUIRE(summaryPopularWord.first["highest_frequency"] == 3);

@@ -1,10 +1,10 @@
 {
-	"input_file_name": "../src/tests/test_files/moby_dick.txt",
+	"input_file_name": "../src/tests/test_files/test1.txt",
 	"statistics":
 		{
-			"minimum_occurrences": 0,
+			"minimum_occurrences": 900,
 			"k_most_frequent_words": 0,
-			"word_length_to_find": 0
+			"word_length_to_find": 5
 		},
-	"serialization_format": "UBJSON"
+	"serialization_format": "BSON"
 }
