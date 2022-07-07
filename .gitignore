@@ -1,6 +1,8 @@
 # Executables
 *.exe
 
+bin/LWWordCounter
+
 # Python files
 .venv/
 __pycache__/

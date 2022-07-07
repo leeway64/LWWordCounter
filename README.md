@@ -1,5 +1,9 @@
 # LWWordCounter
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/leeway64/LWWordCounter)
+
+
 LWWordCounter is an application that displays the frequency of words from a text file. It also
 summarizes several statistics for that file, such as the most popular word and the total number of
 words. Finally, LWWordCounter serializes this summary into either [UBJSON](https://ubjson.org/) or
@@ -9,8 +13,12 @@ The `Deserializer` Python class is provided to deserialize this summary data.
 
 ## Installation
 
-The simplest way to use LWWordCounter is to clone this repository, then build using CMake; I used
-[CLion](https://www.jetbrains.com/clion/) as the primary development environment.
+```shell
+git clone https://github.com/leeway64/LWWordCounter.git
+cd LWWordCounter
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=ninja -G Ninja -S . -B ./cmake-build-release
+cmake --build ./cmake-build-release --target LWWordCounter
+```
 
 
 | :memo: Note                                                                                                                                                                            |
@@ -36,6 +44,13 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 ```
 
 This JSON file is provided as an example in the [`bin`](bin) folder.
+
+Next, run LWWordCounter:
+
+```shell
+cd bin
+LWWordCounter
+```
 
 After running the program, the console output will be:
 
