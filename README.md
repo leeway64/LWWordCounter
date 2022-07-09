@@ -43,6 +43,9 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 }
 ```
 
+This version of Moby Dick (by Herman Melville) was found on
+[Project Gutenberg](https://www.gutenberg.org/ebooks/2701).
+
 This JSON file is provided as an example in the [`bin`](bin) folder.
 
 Next, run LWWordCounter:
@@ -120,32 +123,38 @@ A summary of the file will also be serialized; the serialized file will be calle
 
 
 ## Running Tests
-
 ### C++ Tests
+To run the C++ unit tests, make sure that the `BuildTests` option in [`CMakeLists.txt`](CMakeLists.txt)
+is set to `ON`. 
 
-To run the C++ unit tests, make sure that the `BuildTests` option in
-[`CMakeLists.txt`](CMakeLists.txt) is set to `ON`. Then, run the `WordCounter_tests` executable.
+Then, run the following commands:
+
+```shell
+cmake --build ./cmake-build-release --target WordCounter_Tests
+bin/WordCounter_Tests
+```
 
 
 ### Python Tests
+Run the following commands in the root directory of this project.
 
-In the root directory of this project, if using Linux, run:
-
+#### Linux
 ```sh
-    $ python3 -m venv .venv
-    $ source .venv/bin/activate
-    $ pip install -r requirements.txt
-    $ pytest
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    pytest
 ```
 
-If using Windows, run:
 
+#### Windows
 ```sh
-    $ py -3 -m venv .venv
-    $ .venv/Scripts/activate
-    $ pip install -r requirements.txt
-    $ pytest
+    py -3 -m venv .venv
+    .venv/Scripts/activate
+    pip install -r requirements.txt
+    pytest
 ```
+
 
 ## Third-Party Tools
 - [CMake](https://cmake.org/) (BSD-3-Clause): Build system generator.

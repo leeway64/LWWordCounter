@@ -1,7 +1,6 @@
-# Executables
-*.exe
-
-bin/LWWordCounter
+# Ignore everything in the bin folder except JSON files
+bin/
+!bin/*.json
 
 # Python files
 .venv/
@@ -12,7 +11,3 @@ cmake-build-*/
 
 # CLion project-specific settings
 .idea/
-
-# Serialization formats
-bin/*.ubj
-bin/*.bson
