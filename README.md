@@ -9,7 +9,8 @@ summarizes several statistics for that file, such as the most popular word and t
 words. Finally, LWWordCounter serializes this summary into either [UBJSON](https://ubjson.org/) or
 [BSON](https://bsonspec.org/).
 
-The `Deserializer` Python class is provided to deserialize this summary data.
+The `Deserializer` Python class is provided to deserialize this summary data. For more information
+on the `Deserializer`, refer to [this page](doc/deserializer_documentation.mediawiki).
 
 ## Installation
 
@@ -32,14 +33,14 @@ Input is entered using a JSON file. Let's assume that the JSON file looks like t
 
 ```json
 {
-    "input_file_name": "../src/tests/test_files/moby_dick.txt",
-    "statistics":
-    {
-        "minimum_occurrences": 900,
-        "k_most_frequent_words": 5,
-        "word_length_to_find": 4
-    },
-    "serialization_format": "UBJSON"
+	"input_file_name": "../src/tests/test_files/moby_dick.txt",
+	"statistics":
+		{
+			"minimum_occurrences": 900,
+			"k_most_frequent_words": 5,
+			"word_length_to_find": 4
+		},
+	"serialization_format": "UBJSON"
 }
 ```
 
@@ -66,52 +67,52 @@ File summary:
     Longest word: uninterpenetratingly
     Shortest word: 0
 
-    Number of words with length 4:      1359
+    Number of words with length 4:	1359
 
-    highest_frequency   14727
-    unique_words        17342
-    total_words 222673
+    highest_frequency	14727
+    unique_words	17342
+    total_words	222673
 
     Top 5 words:
-        a       4805
-        and     6515
-        of      6747
-        the     14727
-        to      4709
+	a	4805
+	and	6515
+	of	6747
+	the	14727
+	to	4709
 
 Minimum number of occurrences for printing: 900
 Word frequencies:
-    14727       the
-    1069        him
-    1770        with
-    1644        for
-    1545        all
-    1066        so
-    1822        s
-    3100        that
-    2532        his
-    1064        be
-    1443        this
-    1333        at
-    969 you
-    6747        of
-    6515        and
-    1747        is
-    4245        in
-    1244        whale
-    1105        from
-    4805        a
-    4709        to
-    1752        as
-    1180        not
-    1822        but
-    1232        by
-    925 one
-    2537        it
-    1900        he
-    2127        i
-    1647        was
-    1073        on
+    14727	the
+    1069	him
+    1770	with
+    1644	for
+    1545	all
+    1066	so
+    1822	s
+    3100	that
+    2532	his
+    1064	be
+    1443	this
+    1333	at
+    969	you
+    6747	of
+    6515	and
+    1747	is
+    4245	in
+    1244	whale
+    1105	from
+    4805	a
+    4709	to
+    1752	as
+    1180	not
+    1822	but
+    1232	by
+    925	one
+    2537	it
+    1900	he
+    2127	i
+    1647	was
+    1073	on
 
 A summary of this text file has been serialized into moby_dick_serialized_summary.ubj
 
@@ -123,7 +124,7 @@ A summary of the file will also be serialized; the serialized file will be calle
 
 
 ## Running Tests
-### C++ Tests
+### LWWordCounter (C++) Tests
 To run the C++ unit tests, make sure that the `BuildTests` option in [`CMakeLists.txt`](CMakeLists.txt)
 is set to `ON`. 
 
@@ -131,17 +132,19 @@ Then, run the following commands:
 
 ```shell
 cmake --build ./cmake-build-release --target WordCounter_Tests
-bin/WordCounter_Tests
+cd bin
+WordCounter_Tests
 ```
 
 
-### Python Tests
+### Deserializer (Python) Tests
 Run the following commands in the root directory of this project.
 
 #### Linux
 ```sh
     python3 -m venv .venv
     source .venv/bin/activate
+    pip install -U pip wheel setuptools
     pip install -r requirements.txt
     pytest
 ```
@@ -151,6 +154,7 @@ Run the following commands in the root directory of this project.
 ```sh
     py -3 -m venv .venv
     .venv/Scripts/activate
+    pip install -U pip wheel setuptools
     pip install -r requirements.txt
     pytest
 ```
