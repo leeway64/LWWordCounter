@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.8)
 project (
 	"LWWordCounter"
 	LANGUAGES CXX
-	VERSION "0.0.1"
+	VERSION "1.1.1"
 	)
 
 set(CMAKE_CXX_STANDARD 23)

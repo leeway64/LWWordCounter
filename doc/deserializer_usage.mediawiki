@@ -16,3 +16,6 @@ You can also change the serialized file name and serialization format, if necess
 <code> d3.serialized_file_name = "src/tests/test_files/test5_serialized_summary.bson" </code>
 
 <code> d1.serialization_format = "UBJSON" </code>
+
+For more examples or information, refer to the
+[[../src/tests/test_suite.py|Deserializer test suite]].

@@ -9,6 +9,13 @@ this project follows [semantic versioning](https://semver.org/).
 
 - None
 
+## [1.1.1] - 2022-7-10
+### Added
+
+- Instructions for building LWWordCounter and running tests
+- Github badges for license and version
+- Document on Deserializer usage
+
 ## [1.1.0] - 2022-5-13
 ### Added
 
