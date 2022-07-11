@@ -1,0 +1,18 @@
+== Deserializer Usage ==
+
+First, start by instantiating a Deserializer object:
+
+<code> d3 = Deserializer("src/tests/test_files/test1_serialized_summary.bson", "BSON") </code>
+
+Notice that you can set the serialized file to be deserialized and the deserialization format (BSON
+or UBJSON) in the constructor.
+
+To retrieve the deserialized data, simply use:
+
+<code> data = d3.deserialized_data </code>
+
+You can also change the serialized file name and serialization format, if necessary.
+
+<code> d3.serialized_file_name = "src/tests/test_files/test5_serialized_summary.bson" </code>
+
+<code> d1.serialization_format = "UBJSON" </code>

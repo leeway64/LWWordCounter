@@ -10,7 +10,7 @@ words. Finally, LWWordCounter serializes this summary into either [UBJSON](https
 [BSON](https://bsonspec.org/).
 
 The `Deserializer` Python class is provided to deserialize this summary data. For more information
-on the `Deserializer`, refer to [this page](doc/deserializer_documentation.mediawiki).
+on using the `Deserializer`, refer to [this page](doc/deserializer_usage.mediawiki).
 
 ## Installation
 
